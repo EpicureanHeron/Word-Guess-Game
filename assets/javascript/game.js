@@ -8,20 +8,28 @@ var computerGuess = computerGuessArray[Math.floor(Math.random() * computerGuessA
 
 var guessState = [];
 
+var wonTheGame = false;
 
+var totalGuesses = 0;
 
 for (i = 0; i < computerGuess.length; i++) {
     guessState.push(" _ ");
 }
 
-// Updates guess and adds it to the guessedByUser array
+// Updates guess and adds it to the guessedByUser array and calls the checkGuess function
 document.onkeyup = function newGuess(event) {
     userGuess = event.key;
     guessedByUser.push(userGuess);
-    matchingIndex(userGuess);
+    checkGuess(userGuess);
 }
 
-function matching(element){
+//Updates the guess state with the user's guess
+function updateGuessState(index) {
+    guessState[j] = userGuess;
+}
+
+//checks to see if an element passed to it equals the user's guess
+function isMatching(element){
     if (element == userGuess) {
         return true;
 
@@ -31,20 +39,40 @@ function matching(element){
     }
 }
 
-//Creates an array out of the computer's guess, and cycles through it using the matching function, 
-function matchingIndex(letter){
-    var computerGuessChangedtoArray = computerGuess.split("");
-    for (j = 0; j < computerGuess.length; j++) {
-        if (matching(computerGuessChangedtoArray[j])) {
-            guessState[j] = " " + userGuess + " ";
-            console.log(guessState)
-        }
-    }
+//Updates the guess state with the user's guess
+function updateGuessState(index) {
+    guessState[j] = userGuess;
+    console.log(guessState);
 }
 
-// function updateGuessState() {
-//     guessState
-// }
+//Creates an array out of the computer's guess, and cycles through it using the matching function, 
+function checkGuess(letter){
+    var computerGuessArray = computerGuess.split("");
+    var isMatched = false;
+    for (j = 0; j < computerGuess.length; j++) {
+        if (isMatching(computerGuessArray[j])) {
+            updateGuessState(j);
+            isMatched = true
+        }
+        
+    }
+    //Checks to see if the user guess matched the computer's guess at any point, if it is still false, it updates the totalGuesses variable
+    if (isMatched === false) {
+        totalGuesses = totalGuesses + 1;
+        console.log("You have guessed", totalGuesses);
+    }
+
+    //calles the wonGame function at the end of function to see if the game is over
+    wonGame();
+
+}
+// Checks the computer's guess against the guessState to determine if user has won.
+function wonGame() {
+    if (computerGuess === guessState.join("")) {
+        wonTheGame = true;
+        console.log("You win! ")
+    }
+}
 
 console.log(guessState.toString());
 
