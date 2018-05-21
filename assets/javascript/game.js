@@ -10,11 +10,17 @@ var guessState = [];
 
 var wonTheGame = false;
 
-var totalGuesses = 0;
+var wrongGuesses = 0;
 
 for (i = 0; i < computerGuess.length; i++) {
     guessState.push(" _ ");
 }
+
+//NEEDS TO BE ADDED:
+//Do not increase wrongGuesses if the guess has been made before
+//Limit guesses to only alphabet characters, ignore other keys
+//Get rid of case sensitivity in computer guess VS user guess but make the display show the proper case sensitive OR JUST MAKE IT ALL CAPS BABY!!! 
+
 
 // Updates guess and adds it to the guessedByUser array and calls the checkGuess function
 document.onkeyup = function newGuess(event) {
@@ -53,25 +59,40 @@ function checkGuess(letter){
         if (isMatching(computerGuessArray[j])) {
             updateGuessState(j);
             isMatched = true
-        }
-        
+        }   
     }
-    //Checks to see if the user guess matched the computer's guess at any point, if it is still false, it updates the totalGuesses variable
+    //Checks to see if the user guess matched the computer's guess at any point, if it is still false, it updates the wrongGuesses variable
     if (isMatched === false) {
-        totalGuesses = totalGuesses + 1;
-        console.log("You have guessed", totalGuesses);
+        wrongGuesses = wrongGuesses + 1;
+        console.log("You have guessed", wrongGuesses);
     }
-
-    //calles the wonGame function at the end of function to see if the game is over
+    //calls the wonGame function at the end of function to see if the game is over
     wonGame();
-
+    //calls the updatePage function
+    updatePage();
 }
+
+
 // Checks the computer's guess against the guessState to determine if user has won.
 function wonGame() {
     if (computerGuess === guessState.join("")) {
         wonTheGame = true;
         console.log("You win! ")
     }
+}
+
+
+//Updates the page with the current state of the game
+function updatePage() {
+    var displayGuesses = guessState.join("");
+    var displayLettersGuessed = guessedByUser.join(", ")
+    document.getElementById("computersGuess").innerHTML = computerGuess;
+    document.getElementById("currentState").innerHTML =  displayGuesses;
+    console.log("This is the guess state called in updatePage", guessState);
+    document.getElementById("guessedByUser").innerHTML = displayLettersGuessed;
+    document.getElementById("numberOfGuesses").innerHTML = wrongGuesses;
+    document.getElementById("gameStatus").innerHTML = wonTheGame;
+    console.log(wonTheGame)
 }
 
 console.log(guessState.toString());
