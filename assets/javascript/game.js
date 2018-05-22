@@ -2,7 +2,7 @@ var userGuess;
 
 var guessedByUser = [];
 
-var computerGuessArray = ["Troi", "Data", "Picard", "Riker", "Worf", "Crusher", "Enterprise", "Borg", "Caradassians", "Romulans", "Vulcans"];
+var computerGuessArray = ["Troi", "Data", "Picard", "Riker", "Worf", "Crusher", "Enterprise", "Borg", "Caradassians", "Romulans", "Vulcans", "Geordi", "Wesley"];
 
 var computerGuess = computerGuessArray[Math.floor(Math.random() * computerGuessArray.length)];
 
@@ -15,18 +15,23 @@ var wrongGuesses = 0;
 for (i = 0; i < computerGuess.length; i++) {
     guessState.push(" _ ");
 }
-
+ 
 //NEEDS TO BE ADDED:
 //Do not increase wrongGuesses if the guess has been made before
-//Limit guesses to only alphabet characters, ignore other keys
-//Get rid of case sensitivity in computer guess VS user guess but make the display show the proper case sensitive OR JUST MAKE IT ALL CAPS BABY!!! 
+
 
 
 // Updates guess and adds it to the guessedByUser array and calls the checkGuess function
 document.onkeyup = function newGuess(event) {
-    userGuess = event.key;
-    guessedByUser.push(userGuess);
-    checkGuess(userGuess);
+//checks to see if a lowercase letter was pressed
+    if (event.keyCode >= 65 && event.keyCode <= 90) {
+        userGuess = event.key;
+        guessedByUser.push(userGuess);
+        console.log(event.keyCode);
+        checkGuess(userGuess);
+    }
+
+
 }
 
 //Updates the guess state with the user's guess
@@ -36,10 +41,16 @@ function updateGuessState(index) {
 
 //checks to see if an element passed to it equals the user's guess
 function isMatching(element){
-    if (element == userGuess) {
+    var capsComputerLetter = element.toUpperCase();
+    var capsUserGuessLetter = userGuess.toUpperCase();
+
+    if (capsComputerLetter == capsUserGuessLetter) {
         return true;
 
     }
+    // if (element == userGuess) {
+    //     return true;
+    // }
     else {
         return false;
     }
@@ -47,7 +58,8 @@ function isMatching(element){
 
 //Updates the guess state with the user's guess
 function updateGuessState(index) {
-    guessState[j] = userGuess;
+    var computerGuessArray = computerGuess.split("");
+    guessState[j] = computerGuessArray[j];
     console.log(guessState);
 }
 
@@ -85,18 +97,12 @@ function wonGame() {
 //Updates the page with the current state of the game
 function updatePage() {
     var displayGuesses = guessState.join("");
-    var displayLettersGuessed = guessedByUser.join(", ")
+    var displayLettersGuessed = guessedByUser.join(" ")
     document.getElementById("computersGuess").innerHTML = computerGuess;
     document.getElementById("currentState").innerHTML =  displayGuesses;
-    console.log("This is the guess state called in updatePage", guessState);
     document.getElementById("guessedByUser").innerHTML = displayLettersGuessed;
     document.getElementById("numberOfGuesses").innerHTML = wrongGuesses;
     document.getElementById("gameStatus").innerHTML = wonTheGame;
-    console.log(wonTheGame)
+   
 }
 
-console.log(guessState.toString());
-
-console.log(computerGuess);
-
-console.log(guessedByUser);
