@@ -18,6 +18,9 @@ for (i = 0; i < computerGuess.length; i++) {
  
 //NEEDS TO BE ADDED:
 //Do not increase wrongGuesses if the guess has been made before
+//Need to create "user score" variable 
+//Need to create a limit to guesses
+//Need to create a "reset state" function to reset after a win that chooses a new word (cannot be a previous chosen word)...not sure about reseting guesses though
 
 
 
@@ -98,7 +101,7 @@ function wonGame() {
 function updatePage() {
     var displayGuesses = guessState.join("");
     var displayLettersGuessed = guessedByUser.join(" ")
-    document.getElementById("computersGuess").innerHTML = computerGuess;
+    // document.getElementById("computersGuess").innerHTML = computerGuess;
     document.getElementById("currentState").innerHTML =  displayGuesses;
     document.getElementById("guessedByUser").innerHTML = displayLettersGuessed;
     document.getElementById("numberOfGuesses").innerHTML = wrongGuesses;
