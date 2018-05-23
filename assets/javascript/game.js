@@ -67,13 +67,9 @@ function makeGuessPopulateGuessState(){
     computerMadeGuess = true;
 }
 
-//Updates the guess state with the user's guess
-function updateGuessState(index) {
-    guessState[j] = userGuess;
-}
-
-//checks to see if an element passed to it equals the user's guess
+//checks to see if an element passed to it equals the user's guess, returns true or false
 function isMatching(element){
+    //changes the computer guess and the user guess to capital letters to bypass case sensitivy 
     var capsComputerLetter = element.toUpperCase();
     var capsUserGuessLetter = userGuess.toUpperCase();
 
@@ -81,9 +77,6 @@ function isMatching(element){
         return true;
 
     }
-    // if (element == userGuess) {
-    //     return true;
-    // }
     else {
         return false;
     }
@@ -92,7 +85,7 @@ function isMatching(element){
 //Updates the guess state with the user's guess
 function updateGuessState(index) {
     var computerGuessArray = computerGuess.split("");
-    guessState[j] = computerGuessArray[j];
+    guessState[index] = computerGuessArray[index];
     console.log(guessState);
 }
 
