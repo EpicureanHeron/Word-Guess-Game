@@ -30,7 +30,6 @@ var wordsGuessed = 0;
 var computerGuessCorrect = [];
 
 //NEEDS TO BE ADDED:
-//Do not increase wrongGuesses if the guess has been made before, this might need to be another function that both checks to see if it has been guessed before, adds it to the list, and alerts you to if it has been guessed before
 //Create another array to store previous computer guesses, and IF the new comptuer guess is in that array, make a new guess
 //Need to create a limit to guesses
 //Need to create a "reset state" function to reset after a win that chooses a new word (cannot be a previous chosen word)...not sure about reseting guesses though...need to reset the usedLettersArr array
@@ -90,34 +89,44 @@ function updateGuessState(index) {
 }
 
 //Creates an array out of the computer's guess, and cycles through it using the matching function, 
-function checkGuess(letter){
-    var computerGuessArray = computerGuess.split("");
-    var isMatched = false;
-    validateGuess(letter);
 
+//THIS IS PROBABLY THE MOST COMPLEX FUNCTION< COULD PROBABLY BE SEVERAL FUNCTIONS? 
+
+function checkGuess(letter){
+    //sets the computer's guess to an array
+    var computerGuessArray = computerGuess.split("");
+    //local variable to determine if the letter pass has matched, gets changed in the for loop if isMatching function returns true
+    var isMatched = false;
+    //local variable which determines if the guess letter exists in the usedLettersArr, is set to true or false
+    var hasNotBeenGuessedBefore = validateGuess(letter);
+
+    //if the isMatching returns true, then the updateGuessState function is called, also switches the isMatched to true which allows it to bypass the if statement lower in this function
     for (j = 0; j < computerGuess.length; j++) {
         if (isMatching(computerGuessArray[j])) {
             updateGuessState(j);
             isMatched = true
         }   
     }
-    //Checks to see if the user guess matched the computer's guess at any point, if it is still false, it updates the wrongGuesses variable
-    if (isMatched === false) {
+
+    //if the letter does not match and has not been used before it counts against the user's guesses
+    if (isMatched === false && hasNotBeenGuessedBefore === false) {
         wrongGuesses = wrongGuesses + 1;
-        console.log("You have guessed", wrongGuesses);
     }
+
     //calls the wonGame function at the end of function to see if the game is over
     wonGame();
+
     //calls the updatePage function
     updatePage();
 }
 //Checks to see if user has guessed this letter previously and adds it to the usedLetterArr if they have not, if they have used it, it lets them know
 function validateGuess(element){
     if (usedLettersArr.includes(element)) {
-        alert("You have used this before!")
+        return true;
     }
     else {
         usedLettersArr.push(userGuess);
+        return false;
     }
 }
 
@@ -136,6 +145,8 @@ function wonGame() {
 
 
 //Updates the page with the current state of the game
+
+//COULD BE DONE IN JQUERY? 
 function updatePage() {
     var displayGuesses = guessState.join("");
     var displayLettersGuessed = usedLettersArr.join(" ");
