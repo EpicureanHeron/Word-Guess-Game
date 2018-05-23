@@ -3,10 +3,10 @@
 var userGuess;
 
 // Empty array which will have userGuess added to it 
-var guessedByUser = [];
+var usedLettersArr = [];
 
 // Array from which the computer choses its mystery word
-var computerGuessArray = ["Troi", "Data", "Picard", "Riker", "Worf", "Crusher", "Enterprise", "Borg", "Caradassians", "Romulans", "Vulcans", "Geordi", "Wesley", "Yar", "Guinan", "Klingons"];
+var computerGuessArray = ["Betazoid", "Troi", "Data", "Picard", "Riker", "Worf", "Crusher", "Enterprise", "Borg", "Caradassians", "Romulans", "Vulcans", "Geordi", "Wesley", "Yar", "Guinan", "Klingons"];
 
 // Initalizes the computerGuess, which will store a value from the computerGuessArray 
 var computerGuess;
@@ -30,14 +30,17 @@ var wordsGuessed = 0;
 var computerGuessCorrect = [];
 
 //NEEDS TO BE ADDED:
-//Do not increase wrongGuesses if the guess has been made before
+//Do not increase wrongGuesses if the guess has been made before, this might need to be another function that both checks to see if it has been guessed before, adds it to the list, and alerts you to if it has been guessed before
 //Create another array to store previous computer guesses, and IF the new comptuer guess is in that array, make a new guess
 //Need to create a limit to guesses
-//Need to create a "reset state" function to reset after a win that chooses a new word (cannot be a previous chosen word)...not sure about reseting guesses though...need to reset the guessedByUser array
+//Need to create a "reset state" function to reset after a win that chooses a new word (cannot be a previous chosen word)...not sure about reseting guesses though...need to reset the usedLettersArr array
 
 
+//THINGS TO CLEAN UP
+//1. Make variables and functions more unique
 
-// Updates guess and adds it to the guessedByUser array and calls the checkGuess function
+
+// Updates guess and adds it to the usedLettersArr array and calls the checkGuess function
 document.onkeyup = function newGuess(event) {
 //checks to see if a lowercase letter was pressed
     if (event.keyCode >= 65 && event.keyCode <= 90) {
@@ -45,7 +48,7 @@ document.onkeyup = function newGuess(event) {
             makeGuessPopulateGuessState();
         }
         userGuess = event.key;
-        guessedByUser.push(userGuess);
+        //usedLettersArr.push(userGuess);
         console.log(event.keyCode);
         checkGuess(userGuess);
     }
@@ -97,6 +100,8 @@ function updateGuessState(index) {
 function checkGuess(letter){
     var computerGuessArray = computerGuess.split("");
     var isMatched = false;
+    validateGuess(letter);
+
     for (j = 0; j < computerGuess.length; j++) {
         if (isMatching(computerGuessArray[j])) {
             updateGuessState(j);
@@ -113,7 +118,15 @@ function checkGuess(letter){
     //calls the updatePage function
     updatePage();
 }
-
+//Checks to see if user has guessed this letter previously and adds it to the usedLetterArr if they have not, if they have used it, it lets them know
+function validateGuess(element){
+    if (usedLettersArr.includes(element)) {
+        alert("You have used this before!")
+    }
+    else {
+        usedLettersArr.push(userGuess);
+    }
+}
 
 // Checks the computer's guess against the guessState to determine if user has won, reset variables and chose a new word.
 function wonGame() {
@@ -123,7 +136,7 @@ function wonGame() {
         console.log("You win! ")
         computerGuessCorrect.push(computerGuess)
         wordsGuessed = wordsGuessed + 1;
-        guessedByUser = [];
+        usedLettersArr = [];
         makeGuessPopulateGuessState();
     }
 }
@@ -132,7 +145,7 @@ function wonGame() {
 //Updates the page with the current state of the game
 function updatePage() {
     var displayGuesses = guessState.join("");
-    var displayLettersGuessed = guessedByUser.join(" ");
+    var displayLettersGuessed = usedLettersArr.join(" ");
     var displayGuessCorrect = computerGuessCorrect.join(" ");
     // document.getElementById("computersGuess").innerHTML = computerGuess;
     document.getElementById("currentState").innerHTML =  displayGuesses;
