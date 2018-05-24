@@ -16,6 +16,7 @@
 //"Shield Strength" as a counter
 //CSS animation of the whole screen shaking at 10%, lights flash 
 //Make this an object
+//How many guesses ? 6 
 
 
 //VARIABLES
@@ -60,6 +61,8 @@ var pictureDictionary = {
     "Worf": "assets/images/Worf.jpg",
     "Yar": "assets/images/Yar.jpg"
 }
+//playAgain is set to false intitally, this comes into play in the reset function
+var playAgain = false;
 
 //FUNCTIONS
 
@@ -76,7 +79,7 @@ $(document).keyup(function newGuess(event) {
         }
         userGuess = event.key;
         //usedLettersArr.push(userGuess);
-        console.log(event.keyCode);
+        // console.log(event.keyCode);
         checkGuess(userGuess);
     }
     else {
@@ -144,24 +147,36 @@ function checkGuess(letter){
     //local variable which determines if the guess letter exists in the usedLettersArr, is set to true or false
     var hasNotBeenGuessedBefore = validateGuess(letter);
 
-    //if the isMatching returns true, then the updateGuessState function is called, also switches the isMatched to true which allows it to bypass the if statement lower in this function
-    for (j = 0; j < computerGuess.length; j++) {
-        if (isMatching(computerGuessArray[j])) {
-            updateGuessState(j);
-            isMatched = true
-        }   
-    }
+    //Checks to see if guesses are remaining
+    if (wrongGuesses < 5 ) {
+            for (j = 0; j < computerGuess.length; j++) {
+                //if the isMatching returns true, then the updateGuessState function is called, also switches the isMatched to true which allows it to bypass the if statement lower in this function
 
-    //if the letter does not match and has not been used before it counts against the user's guesses
-    if (isMatched === false && hasNotBeenGuessedBefore === false) {
+                if (isMatching(computerGuessArray[j])) {
+                updateGuessState(j);
+                isMatched = true
+            }   
+        }
+
+        //if the letter does not match and has not been used before it counts against the user's guesses
+        if (isMatched === false && hasNotBeenGuessedBefore === false) {
+            wrongGuesses = wrongGuesses + 1;
+        }
+
+        //calls the wonGame function at the end of function to see if the game is over
+        wonGame();
+
+        //calls the updatePage function
+        updatePage();
+    }
+    //Tells the user if they lose
+    else {
         wrongGuesses = wrongGuesses + 1;
+        updatePage();
+        playAgain = confirm("You lost! Want to play again?");
+        reset(playAgain);
     }
-
-    //calls the wonGame function at the end of function to see if the game is over
-    wonGame();
-
-    //calls the updatePage function
-    updatePage();
+    
 }
 //Checks to see if user has guessed this letter previously and adds it to the usedLetterArr if they have not, if they have used it, it lets them know
 function validateGuess(element){
@@ -198,6 +213,22 @@ function updatePicture(element) {
         $("#pictureOfLastGuessed").attr("src", pictureDictionary[element]);
     }
 
+}
+
+function reset(someBoolean) {
+    if (someBoolean) {
+        guessState = [];
+        usedLettersArr = [];
+        wrongGuesses = 0;
+        computerGuessCorrect = []
+        wordsGuessed = 0;
+        //need to update picture as well;
+        updatePage();
+        $("#pictureOfLastGuessed").attr("src", "assets/images/placeholder.png");
+    }
+    else {
+        alert("You suck");
+    }
 }
 
 
