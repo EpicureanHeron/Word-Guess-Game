@@ -87,11 +87,27 @@ $(document).keyup(function newGuess(event) {
 function makeGuessPopulateGuessState(){
     computerGuess = computerGuessArray[Math.floor(Math.random() * computerGuessArray.length)];
     console.log(computerGuess);
+    //This should remove the computers guess from the array, so going forward it won't come again
+    //However, right now it takes the index of whatever the computer guess is and deletes everything after that in the array...which is not what I want.
+
+    // var index = computerGuessArray.indexOf(computerGuess);
+    // console.log(index);
+    // console.log("this is your current array for guesses" + computerGuessArray)
+    // if (index > -1) {
+    //     computerGuessArray.splice(index);
+    //     console.log("removal fired");
+    // }
+
+
+    //Sets the guessState to empty array
     guessState = [];
+    //Populates the array with underscores the total length of the computerGuess
     for (i = 0; i < computerGuess.length; i++) {
         guessState.push(" _ ");
     }
     computerMadeGuess = true;
+
+   
 }
 
 //checks to see if an element passed to it equals the user's guess, returns true or false
