@@ -9,8 +9,6 @@
 //1. Make variables and functions more unique to increase readability
 //2. Some functions are very multi purpose...which makes it a pain to read, be more concise 
 //3. Could use the forEach thing instead of all these darn for loops
-//4. jQuery on the updatePage
-//5. jQuery handles the key presses
 
 //WISHLIST
 //Add pictures for each element in the computerGuessArray for the characters, use jQuery to update the photos on the screen
@@ -165,20 +163,28 @@ function wonGame() {
 
 //Updates the page with the current state of the game
 
-//COULD BE DONE IN JQUERY? 
 function updatePage() {
+
     var displayGuesses = guessState.join("");
     var displayLettersGuessed = usedLettersArr.join(" ");
     var displayGuessCorrect = computerGuessCorrect.join(" ");
-    // document.getElementById("computersGuess").innerHTML = computerGuess;
-    document.getElementById("currentState").innerHTML =  displayGuesses;
-    document.getElementById("guessedByUser").innerHTML = displayLettersGuessed;
-    document.getElementById("numberOfGuesses").innerHTML = wrongGuesses;
-    document.getElementById("gameStatus").innerHTML = wonTheGame;
-    document.getElementById("wordsGuessed").innerHTML = wordsGuessed;
-    //This should probably be nestled in an if statement checking to see if the computerGuessCorrect array is greater than 0.
-    document.getElementById("correctWords").innerHTML = displayGuessCorrect;
+   
+    $("#currentState").html(displayGuesses);
+    $("#guessedByUser").html(displayLettersGuessed);
+    $("#numberOfGuesses").html(wrongGuesses);  
+    $("#wordsGuessed").html(wordsGuessed);
+    //This should probably be nestled in an if statement checking to see if the computerGuessCorrect array is greater than 0.   
+    $("#correctWords").html(displayGuessCorrect);
 
+    // document.getElementById("computersGuess").innerHTML = computerGuess;
+    //document.getElementById("currentState").innerHTML =  displayGuesses;
+    //document.getElementById("guessedByUser").innerHTML = displayLettersGuessed;
+    //document.getElementById("numberOfGuesses").innerHTML = wrongGuesses;
+    // document.getElementById("gameStatus").innerHTML = wonTheGame;
+    //This jQuery works after the variable flips from false to true...why?
+    // $("#gameStatus").html(wonTheGame);
+    // document.getElementById("wordsGuessed").innerHTML = wordsGuessed;
+    //document.getElementById("correctWords").innerHTML = displayGuessCorrect;
    
 }
 
