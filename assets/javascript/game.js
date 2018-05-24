@@ -10,6 +10,7 @@
 //2. Some functions are very multi purpose...which makes it a pain to read, be more concise 
 //3. Could use the forEach thing instead of all these darn for loops
 //4. jQuery on the updatePage
+//5. jQuery handles the key presses
 
 //WISHLIST
 //Add pictures for each element in the computerGuessArray for the characters, use jQuery to update the photos on the screen
@@ -54,7 +55,11 @@ var computerGuessCorrect = [];
 //FUNCTIONS
 
 // Updates guess and adds it to the usedLettersArr array and calls the checkGuess function
-document.onkeyup = function newGuess(event) {
+//The below is native javascript without jQuery
+//document.onkeyup = function newGuess(event) {
+
+//This is jQuery handling the key event
+$(document).keyup(function newGuess(event) {
 //checks to see if a lowercase letter was pressed
     if (event.keyCode >= 65 && event.keyCode <= 90) {
         if (computerMadeGuess === false) {
@@ -68,7 +73,7 @@ document.onkeyup = function newGuess(event) {
     else {
         alert("That's not a letter!!!");
     }
-}
+})
 // creates a computer guess from the array and populates the guess state. 
 function makeGuessPopulateGuessState(){
     computerGuess = computerGuessArray[Math.floor(Math.random() * computerGuessArray.length)];
