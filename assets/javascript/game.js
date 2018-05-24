@@ -1,8 +1,8 @@
 
 //NEEDS TO BE ADDED:
 //Create another array to store previous computer guesses, and IF the new comptuer guess is in that array, make a new guess
-//Need to create a limit to guesses
-//Need to create a "reset state" function to reset after a win that chooses a new word (cannot be a previous chosen word)...not sure about reseting guesses though...need to reset the usedLettersArr array
+//DONE: Need to create a limit to guesses
+//DONE: Need to create a "reset state" function to reset after a win that chooses a new word (cannot be a previous chosen word)...not sure about reseting guesses though...need to reset the usedLettersArr array
 
 
 //THINGS TO CLEAN UP/IMPROVEMENTS
@@ -11,12 +11,12 @@
 //3. Could use the forEach thing instead of all these darn for loops
 
 //WISHLIST
-//Add pictures for each element in the computerGuessArray for the characters, use jQuery to update the photos on the screen
+// STARTED: Add pictures for each element in the computerGuessArray for the characters, use jQuery to update the photos on the screen
 //Play a sound clips
 //"Shield Strength" as a counter
 //CSS animation of the whole screen shaking at 10%, lights flash 
 //Make this an object
-//How many guesses ? 6 
+//DONE: How many guesses ? 6 
 
 
 //VARIABLES
@@ -90,6 +90,9 @@ $(document).keyup(function newGuess(event) {
 function makeGuessPopulateGuessState(){
     computerGuess = computerGuessArray[Math.floor(Math.random() * computerGuessArray.length)];
     console.log(computerGuess);
+
+    //WORK ON THE BELOW 5/24/2018
+
     //This should remove the computers guess from the array, so going forward it won't come again
     //However, right now it takes the index of whatever the computer guess is and deletes everything after that in the array...which is not what I want.
 
@@ -237,10 +240,11 @@ function updatePage() {
     var displayGuesses = guessState.join("");
     var displayLettersGuessed = usedLettersArr.join(" ");
     var displayGuessCorrect = computerGuessCorrect.join(" ");
-   
+    var displayGuessesRemaining = 6 - wrongGuesses;
+
     $("#currentState").html(displayGuesses);
     $("#guessedByUser").html(displayLettersGuessed);
-    $("#numberOfGuesses").html(wrongGuesses);  
+    $("#numberOfGuesses").html(displayGuessesRemaining);  
     $("#wordsGuessed").html(wordsGuessed);
     //This should probably be nestled in an if statement checking to see if the computerGuessCorrect array is greater than 0.   
     $("#correctWords").html(displayGuessCorrect);
