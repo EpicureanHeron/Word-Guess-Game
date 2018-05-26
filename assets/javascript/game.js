@@ -106,7 +106,7 @@ function makeGuessPopulateGuessState(){
     //checks to see if there are any guesses left to be had
     
     if (computerGuessArray.length > 0) {
-
+        playSoundEffect();
         // computer choses a random value from the established arr
 
         computerGuess = computerGuessArray[Math.floor(Math.random() * computerGuessArray.length)];
@@ -263,6 +263,18 @@ function reset(someBoolean) {
         alert("You suck");
     }
 }
+
+
+   
+
+   // code to play sound effect
+   function playSoundEffect() {
+        var audioElement = document.createElement("audio");
+        audioElement.setAttribute("src", "assets/audio/makeItSo.mp3");
+ 
+        audioElement.play();
+   }
+  
 
 
 function updatePage() {
