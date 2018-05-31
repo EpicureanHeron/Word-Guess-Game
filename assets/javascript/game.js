@@ -7,7 +7,7 @@
 
 //WISHLIST
 // STARTED: Add pictures for each element in the computerGuessArray for the characters, use jQuery to update the photos on the screen
-//Play a sound clips
+//DONE: Play a sound clips
 //"Shield Strength" as a counter
 //CSS animation of the whole screen shaking at 10%, lights flash 
 //Make this an object
@@ -121,6 +121,7 @@ function makeGuessPopulateGuessState(){
 
         //Sets the guessState to empty array
         console.log(computerGuess);
+        console.log(computerGuessArray)
         guessState = [];
 
         //Populates the array with underscores the total length of the computerGuess
@@ -140,9 +141,10 @@ function makeGuessPopulateGuessState(){
         reset(playAgain);
         
     }
+    }
 
    
-}
+
 
 //checks to see if an element passed to it equals the user's guess, returns true or false
 function isMatching(element){
@@ -260,18 +262,22 @@ function reset(someBoolean) {
         $("#pictureOfLastGuessed").attr("src", "assets/images/placeholder.png");
     }
     else {
-        alert("You suck");
+        alert("OK :( ");
     }
 }
 
 
    
 
-   // code to play sound effect
+   // code to play sound effect. This is adapted from the in class captain planet code and I believe can be reduced more, but it currently works
    function playSoundEffect() {
+
+
+       //creates a an an audio tag
         var audioElement = document.createElement("audio");
+        //sets that audio tag's source to be the Make IT so mp3
         audioElement.setAttribute("src", "assets/audio/makeItSo.mp3");
- 
+        //plays the audio
         audioElement.play();
    }
   
